@@ -1,4 +1,4 @@
-package sortlib
+package sort
 
 import (
 	"sort"

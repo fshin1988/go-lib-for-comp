@@ -1,4 +1,4 @@
-package intlib
+package int
 
 func max(x, y int) int {
 	if x > y {

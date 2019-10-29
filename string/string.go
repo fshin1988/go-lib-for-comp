@@ -1,4 +1,4 @@
-package stringlib
+package string
 
 func reverse(s string) string {
 	runes := []rune(s)
