@@ -21,6 +21,14 @@ func abs(x int) int {
 	return -x
 }
 
+func pow(x, y int) int {
+	res := 1
+	for i := 0; i < y; i++ {
+		res *= x
+	}
+	return res
+}
+
 func gcd(a, b int) int {
 	if b == 0 {
 		return a
