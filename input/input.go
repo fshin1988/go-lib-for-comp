@@ -8,6 +8,7 @@ import (
 )
 
 var sc = bufio.NewScanner(os.Stdin)
+var wtr = bufio.NewWriter(os.Stdout)
 
 func nextInt() int {
 	sc.Scan()
@@ -20,12 +21,19 @@ func nextInt() int {
 
 func main() {
 	sc.Split(bufio.ScanWords)
-	num := nextInt()
-	arr := make([]int, num)
-	for i := 0; i < num; i++ {
+	N := nextInt()
+	arr := make([]int, N)
+	for i := 0; i < N; i++ {
 		arr[i] = nextInt()
 	}
-	fmt.Println(len(arr))
+	for i := 0; i < N; i++ {
+		if i != 0 {
+			fmt.Fprint(wtr, " ")
+		}
+		fmt.Fprint(wtr, arr[i])
+	}
+	fmt.Fprintln(wtr)
+	_ = wtr.Flush()
 }
 
 var rdr = bufio.NewReaderSize(os.Stdin, 1000000)
