@@ -1,15 +1,37 @@
 package container
 
 type Stack struct {
-	values []int
+	arr []int
 }
 
 func (s *Stack) push(v int) {
-	s.values = append(s.values, v)
+	s.arr = append(s.arr, v)
 }
 
 func (s *Stack) pop() int {
-	res := s.values[len(s.values)-1]
-	s.values = s.values[:len(s.values)-1]
+	res := s.arr[len(s.arr)-1]
+	s.arr = s.arr[:len(s.arr)-1]
 	return res
+}
+
+func (s *Stack) isEmpty() bool {
+	return len(s.arr) == 0
+}
+
+type Queue struct {
+	arr []int
+}
+
+func (q *Queue) enqueue(v int) {
+	q.arr = append(q.arr, v)
+}
+
+func (q *Queue) dequeue() int {
+	res := q.arr[0]
+	q.arr = q.arr[1:]
+	return res
+}
+
+func (q *Queue) isEmpty() bool {
+	return len(q.arr) == 0
 }
