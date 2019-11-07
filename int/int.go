@@ -1,5 +1,9 @@
 package int
 
+import (
+	"strconv"
+)
+
 func max(x, y int) int {
 	if x > y {
 		return x
@@ -38,4 +42,13 @@ func gcd(a, b int) int {
 
 func lcm(a, b int) int {
 	return a / gcd(a, b) * b
+}
+
+func toNums(str string) []int {
+	var nums []int
+	for _, r := range str {
+		n, _ := strconv.Atoi(string(r))
+		nums = append(nums, n)
+	}
+	return nums
 }
