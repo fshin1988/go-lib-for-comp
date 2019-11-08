@@ -5,13 +5,13 @@ import (
 )
 
 func main() {
-	var bit int
-	fmt.Scan(&bit)
-	for mask := 0; mask < 1<<uint(bit); mask++ {
-		b := make([]bool, bit)
-		for i := 0; i < bit; i++ {
-			b[i] = 1<<uint(i)&mask > 0
+	var N int
+	fmt.Scan(&N)
+	for bit := 0; bit < 1<<uint(N); bit++ {
+		arr := make([]bool, N)
+		for i := 0; i < N; i++ {
+			arr[i] = 1<<uint(i)&bit > 0
 		}
-		fmt.Println(b)
+		fmt.Println(arr)
 	}
 }
