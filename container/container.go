@@ -22,11 +22,11 @@ type Queue struct {
 	arr []int
 }
 
-func (q *Queue) enqueue(v int) {
+func (q *Queue) push(v int) {
 	q.arr = append(q.arr, v)
 }
 
-func (q *Queue) dequeue() int {
+func (q *Queue) pop() int {
 	res := q.arr[0]
 	q.arr = q.arr[1:]
 	return res
