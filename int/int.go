@@ -52,3 +52,15 @@ func toNums(str string) []int {
 	}
 	return nums
 }
+
+func modPow(a, n, mod int) int {
+	res := 1
+	for n > 0 {
+		if (n & 1) > 0 {
+			res = res * a % mod
+		}
+		a = a * a % mod
+		n >>= 1
+	}
+	return res
+}
