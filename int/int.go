@@ -4,18 +4,24 @@ import (
 	"strconv"
 )
 
-func max(x, y int) int {
-	if x > y {
-		return x
+func max(nums ...int) int {
+	m := nums[0]
+	for _, i := range nums {
+		if m < i {
+			m = i
+		}
 	}
-	return y
+	return m
 }
 
-func min(x, y int) int {
-	if x < y {
-		return x
+func min(nums ...int) int {
+	m := nums[0]
+	for _, i := range nums {
+		if m > i {
+			m = i
+		}
 	}
-	return y
+	return m
 }
 
 func abs(x int) int {
