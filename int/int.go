@@ -70,3 +70,38 @@ func modPow(a, n, mod int) int {
 	}
 	return res
 }
+
+func modComb(big, small, mod int) int {
+	if big < 0 || small < 0 || big < small {
+		return 0
+	}
+	tmp := modFact(big, mod) * modInv(modFact(small, mod), mod) % mod
+	return tmp * modInv(modFact(big-small, mod), mod) % mod
+}
+
+func modFact(a, mod int) int {
+	res := 1
+	for i := a; i > 0; i-- {
+		res *= i
+		res %= mod
+	}
+	return res
+}
+
+func modInv(a, mod int) int {
+	b := mod
+	u := 1
+	v := 0
+	for b > 0 {
+		t := a / b
+		a -= t * b
+		a, b = b, a
+		u -= t * v
+		u, v = v, u
+	}
+	u %= mod
+	if u < 0 {
+		u += mod
+	}
+	return u
+}
