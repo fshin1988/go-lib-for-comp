@@ -8,22 +8,33 @@ func reverse(s []int) {
 	sort.Sort(sort.Reverse(sort.IntSlice(s)))
 }
 
-func binarySearch(nums []int, key int) int {
-	left := -1
-	right := len(nums)
-	for right-left > 1 {
-		mid := left + (right-left)/2
-		if nums[mid] >= key {
-			right = mid
+func binarySearch(a []int, key int) int {
+	ng := -1
+	ok := len(a)
+	for abs(ok-ng) > 1 {
+		mid := (ok + ng) / 2
+		if a[mid] >= key {
+			ok = mid
 		} else {
-			left = mid
+			ng = mid
 		}
 	}
-	return right
+	return ok
 }
 
-type RuneSlice []rune
+func abs(x int) int {
+	if x > 0 {
+		return x
+	}
+	return -x
+}
 
-func (p RuneSlice) Len() int           { return len(p) }
-func (p RuneSlice) Less(i, j int) bool { return p[i] < p[j] }
-func (p RuneSlice) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+type Val struct {
+	id, num int
+}
+
+type ByNum []Val
+
+func (a ByNum) Len() int           { return len(a) }
+func (a ByNum) Less(i, j int) bool { return a[i].num < a[j].num }
+func (a ByNum) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
