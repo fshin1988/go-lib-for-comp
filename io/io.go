@@ -31,6 +31,14 @@ func (s *Scanner) nextInt() int {
 	return i
 }
 
+func (s *Scanner) nextFloat() float64 {
+	f, e := strconv.ParseFloat(s.nextStr(), 64)
+	if e != nil {
+		panic(e)
+	}
+	return f
+}
+
 func (s *Scanner) nextRuneSlice() []rune {
 	return []rune(s.nextStr())
 }
