@@ -41,6 +41,41 @@ func (q *Queue) isEmpty() bool {
 	return len(q.arr) == 0
 }
 
+type UnionFind struct {
+	parent []int
+}
+
+func NewUnionFind(n int) *UnionFind {
+	p := make([]int, n)
+	for i := 0; i < n; i++ {
+		p[i] = i
+	}
+	return &UnionFind{p}
+}
+
+func (a *UnionFind) root(x int) int {
+	if a.parent[x] == x {
+		return x
+	} else {
+		a.parent[x] = a.root(a.parent[x])
+		return a.parent[x]
+	}
+}
+
+func (a *UnionFind) isSame(x, y int) bool {
+	return a.root(x) == a.root(y)
+}
+
+func (a *UnionFind) unite(x, y int) {
+	x = a.root(x)
+	y = a.root(y)
+	if x == y {
+		return
+	} else {
+		a.parent[x] = y
+	}
+}
+
 type IntHeap []int
 
 func (h IntHeap) Len() int           { return len(h) }
