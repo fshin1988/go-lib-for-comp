@@ -24,10 +24,11 @@ func (h *NodeHeap) Pop() interface{} {
 }
 
 type Node struct {
-	edgesTo   []int
-	edgesCost []int
-	done      bool
-	cost      int
+	id           int
+	edgesTo      []int
+	edgesCost    []int
+	done         bool
+	cost, fromId int
 }
 
 type Graph struct {
@@ -38,12 +39,12 @@ func NewGraph() *Graph {
 	return &Graph{}
 }
 
-func (g *Graph) addNode(edgesTo, edgesCost []int, isStart bool) {
+func (g *Graph) addNode(id int, edgesTo, edgesCost []int) {
 	cost := -1
-	if isStart {
+	if id == 0 {
 		cost = 0
 	}
-	g.nodes = append(g.nodes, &Node{edgesTo, edgesCost, false, cost})
+	g.nodes = append(g.nodes, &Node{id, edgesTo, edgesCost, false, cost, 0})
 }
 
 func (g *Graph) search() {
@@ -60,6 +61,7 @@ func (g *Graph) search() {
 			to := doneNode.edgesTo[i]
 			cost := doneNode.cost + doneNode.edgesCost[i]
 			if g.nodes[to].cost < 0 || cost < g.nodes[to].cost {
+				g.nodes[to].fromId = doneNode.id
 				g.nodes[to].cost = cost
 				heap.Push(h, g.nodes[to])
 			}
@@ -70,14 +72,14 @@ func (g *Graph) search() {
 func main() {
 	g := NewGraph()
 	// Start Node
-	g.addNode([]int{1, 2, 3}, []int{5, 4, 2}, true)
-	g.addNode([]int{0, 3, 5}, []int{5, 2, 6}, false)
-	g.addNode([]int{0, 1, 3, 4}, []int{4, 2, 3, 2}, false)
-	g.addNode([]int{0, 2, 4}, []int{2, 3, 6}, false)
-	g.addNode([]int{2, 3, 5}, []int{2, 6, 4}, false)
-	g.addNode([]int{1, 4}, []int{6, 4}, false)
+	g.addNode(0, []int{1, 2, 3}, []int{5, 4, 2})
+	g.addNode(1, []int{0, 3, 5}, []int{5, 2, 6})
+	g.addNode(2, []int{0, 1, 3, 4}, []int{4, 2, 3, 2})
+	g.addNode(3, []int{0, 2, 4}, []int{2, 3, 6})
+	g.addNode(4, []int{2, 3, 5}, []int{2, 6, 4})
+	g.addNode(5, []int{1, 4}, []int{6, 4})
 	g.search()
-	for i, n := range g.nodes {
-		fmt.Println(i, n.cost)
+	for _, n := range g.nodes {
+		fmt.Println("id:", n.id, "cost:", n.cost, "fromId:", n.fromId)
 	}
 }
