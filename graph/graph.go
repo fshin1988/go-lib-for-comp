@@ -5,17 +5,21 @@ import (
 	"fmt"
 )
 
-type NodeHeap []*Node
-
-func (h NodeHeap) Len() int           { return len(h) }
-func (h NodeHeap) Less(i, j int) bool { return h[i].cost < h[j].cost }
-func (h NodeHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
-
-func (h *NodeHeap) Push(x interface{}) {
-	*h = append(*h, x.(*Node))
+type Q struct {
+	id, cost int
 }
 
-func (h *NodeHeap) Pop() interface{} {
+type PriorityQueue []Q
+
+func (h PriorityQueue) Len() int           { return len(h) }
+func (h PriorityQueue) Less(i, j int) bool { return h[i].cost < h[j].cost }
+func (h PriorityQueue) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func (h *PriorityQueue) Push(x interface{}) {
+	*h = append(*h, x.(Q))
+}
+
+func (h *PriorityQueue) Pop() interface{} {
 	old := *h
 	n := len(old)
 	x := old[n-1]
@@ -48,11 +52,12 @@ func (g *Graph) addNode(id int, edgesTo, edgesCost []int) {
 }
 
 func (g *Graph) search() {
-	h := &NodeHeap{}
+	h := &PriorityQueue{}
 	heap.Init(h)
-	heap.Push(h, g.nodes[0])
+	heap.Push(h, Q{0, 0})
 	for h.Len() > 0 {
-		doneNode := heap.Pop(h).(*Node)
+		queue := heap.Pop(h).(Q)
+		doneNode := g.nodes[queue.id]
 		if doneNode.done {
 			continue
 		}
@@ -63,7 +68,7 @@ func (g *Graph) search() {
 			if g.nodes[to].cost < 0 || cost < g.nodes[to].cost {
 				g.nodes[to].fromId = doneNode.id
 				g.nodes[to].cost = cost
-				heap.Push(h, g.nodes[to])
+				heap.Push(h, Q{to, cost})
 			}
 		}
 	}
