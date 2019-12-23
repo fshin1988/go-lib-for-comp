@@ -105,3 +105,35 @@ func modInv(a, mod int) int {
 	}
 	return u
 }
+
+func divisor(n int) []int {
+	res := []int{}
+	for i := 1; i*i <= n; i++ {
+		if n%i == 0 {
+			res = append(res, i)
+			if i*i != n {
+				res = append(res, n/i)
+			}
+		}
+	}
+	return res
+}
+
+func primeFactors(n int) map[int]int {
+	pfs := make(map[int]int)
+	for n%2 == 0 {
+		pfs[2]++
+		n = n / 2
+	}
+	for i := 3; i*i <= n; i = i + 2 {
+		for n%i == 0 {
+			pfs[i]++
+			n = n / i
+		}
+	}
+	if n > 2 {
+		pfs[n]++
+	}
+
+	return pfs
+}
