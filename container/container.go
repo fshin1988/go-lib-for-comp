@@ -76,30 +76,36 @@ func (a *UnionFind) unite(x, y int) {
 	}
 }
 
-type IntHeap []int
-
-func (h IntHeap) Len() int           { return len(h) }
-func (h IntHeap) Less(i, j int) bool { return h[i] < h[j] }
-func (h IntHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
-
-func (h *IntHeap) Push(x interface{}) {
-	*h = append(*h, x.(int))
+type Element struct {
+	id, cost int
 }
 
-func (h *IntHeap) Pop() interface{} {
-	old := *h
+type PQ []Element
+
+func (pq PQ) Len() int           { return len(pq) }
+func (pq PQ) Less(i, j int) bool { return pq[i].cost < pq[j].cost }
+func (pq PQ) Swap(i, j int)      { pq[i], pq[j] = pq[j], pq[i] }
+
+func (pq *PQ) Push(x interface{}) {
+	*pq = append(*pq, x.(Element))
+}
+
+func (pq *PQ) Pop() interface{} {
+	old := *pq
 	n := len(old)
 	x := old[n-1]
-	*h = old[0 : n-1]
+	*pq = old[0 : n-1]
 	return x
 }
 
 func main() {
-	h := &IntHeap{2, 1, 5}
-	heap.Init(h)
-	heap.Push(h, 3)
-	for h.Len() > 0 {
-		fmt.Printf("%d ", heap.Pop(h))
+	pq := &PQ{}
+	heap.Init(pq)
+	heap.Push(pq, Element{0, 3})
+	heap.Push(pq, Element{1, 5})
+	heap.Push(pq, Element{2, 1})
+	for pq.Len() > 0 {
+		fmt.Printf("%d ", heap.Pop(pq).(Element))
 	}
 	fmt.Println()
 }
