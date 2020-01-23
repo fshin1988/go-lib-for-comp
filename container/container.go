@@ -23,15 +23,19 @@ func (s *Stack) isEmpty() bool {
 	return len(s.arr) == 0
 }
 
-type Queue struct {
-	arr []int
+type Node struct {
+	x, y int
 }
 
-func (q *Queue) push(v int) {
+type Queue struct {
+	arr []Node
+}
+
+func (q *Queue) push(v Node) {
 	q.arr = append(q.arr, v)
 }
 
-func (q *Queue) pop() int {
+func (q *Queue) pop() Node {
 	res := q.arr[0]
 	q.arr = q.arr[1:]
 	return res
