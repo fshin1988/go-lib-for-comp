@@ -47,14 +47,17 @@ func (q *Queue) isEmpty() bool {
 
 type UnionFind struct {
 	parent []int
+	size   []int
 }
 
 func NewUnionFind(n int) *UnionFind {
 	p := make([]int, n)
+	s := make([]int, n)
 	for i := 0; i < n; i++ {
 		p[i] = i
+		s[i] = 1
 	}
-	return &UnionFind{p}
+	return &UnionFind{p, s}
 }
 
 func (a *UnionFind) root(x int) int {
@@ -77,7 +80,12 @@ func (a *UnionFind) unite(x, y int) {
 		return
 	} else {
 		a.parent[x] = y
+		a.size[y] += a.size[x]
 	}
+}
+
+func (a *UnionFind) getSize(x int) int {
+	return a.size[a.root(x)]
 }
 
 type Element struct {
