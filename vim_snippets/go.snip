@@ -56,14 +56,14 @@ options     head
 snippet     binarySearch
 abbr        binarySearch
 options     head
-  ng := -1
-  ok := len(a)
-  for abs(ok-ng) > 1 {
-    mid := (ok + ng) / 2
+  l := -1
+  r := len(a)
+  for abs(r-l) > 1 {
+    mid := (r + l) / 2
     if a[mid] >= key {
-      ok = mid
+      r = mid
     } else {
-      ng = mid
+      l = mid
     }
   }
 
