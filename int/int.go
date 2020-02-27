@@ -72,6 +72,24 @@ func divisor(n int) []int {
 	return res
 }
 
+func primeTable(n int) map[int]bool {
+	prime := make(map[int]bool)
+	for i := 0; i <= n; i++ {
+		prime[i] = true
+	}
+	prime[0] = false
+	prime[1] = false
+	for i := 2; i*i <= n; i++ {
+		if !prime[i] {
+			continue
+		}
+		for j := i + i; j <= n; j += i {
+			prime[j] = false
+		}
+	}
+	return prime
+}
+
 func primeFactors(n int) map[int]int {
 	pfs := make(map[int]int)
 	for n%2 == 0 {
