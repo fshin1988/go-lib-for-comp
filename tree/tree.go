@@ -3,12 +3,48 @@ package main
 import "fmt"
 
 func main() {
+	// SegmentTree
 	seg := InitSegmentTree([]int{1, 9, 5, 3, 7, 2, 4, 6}, int(1e9), IntMergerMin)
 	// [1, 4) = [9, 5, 3] = 3
 	fmt.Println(seg.GetRange(1, 4))
 	seg.UpdateAt(5, 6)
 	// [4, 7) = [7, 6, 4] = 4
 	fmt.Println(seg.GetRange(4, 7))
+
+	// BIT
+	bit := NewBit(8)
+	bit.add(1, 1)
+	bit.add(3, 3)
+	bit.add(7, 7)
+	// [1, 3] = [1, 0, 3] = 4
+	fmt.Println(bit.sum(3))
+	// [1, 8] = [1, 0, 3, 0, 0, 0, 7, 0] = 11
+	fmt.Println(bit.sum(8))
+}
+
+// 1-indexed
+type BIT struct {
+	data []int
+}
+
+func NewBit(n int) *BIT {
+	return &BIT{
+		data: make([]int, n+1),
+	}
+}
+
+func (tree *BIT) add(a, v int) {
+	for i := a; i <= len(tree.data)-1; i += i & -i {
+		tree.data[i] += v
+	}
+}
+
+func (tree *BIT) sum(to int) int {
+	res := 0
+	for i := to; i > 0; i -= i & -i {
+		res += tree.data[i]
+	}
+	return res
 }
 
 func IntMergerMin(a, b int) int {
@@ -21,6 +57,7 @@ func IntMergerMin(a, b int) int {
 
 type Merger func(a, b int) int
 
+// 0-indexed
 type SegmentTree struct {
 	offset int
 	data   []int
