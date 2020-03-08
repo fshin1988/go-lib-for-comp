@@ -1,3 +1,15 @@
+snippet forrev
+abbr for N-1..0 { ... }
+  for ${1:i} := ${2:N-1}; $1 >= 0; $1-- {
+    ${0}
+  }
+
+snippet reverse
+abbr reverse slice
+  for l, r := 0, len(${1:arr})-1; l < r; l, r = l+1, r-1 {
+    $1[l], $1[r] = $1[r], $1[l]
+  }
+
 snippet     fprintln
 abbr        fprintln
 options     head
