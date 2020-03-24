@@ -4,6 +4,8 @@ import (
 	"container/heap"
 )
 
+const INF = 1 << 60
+
 type Edge struct {
 	to, cost int
 }
@@ -30,12 +32,17 @@ func (pq *PQ) Pop() interface{} {
 	return x
 }
 
-func dijkstra(G [][]Edge, D []int) {
+func dijkstra(G [][]Edge, D []int, start int) {
 	pq := &PQ{}
 	heap.Init(pq)
-	D[0] = 0
+	D[start] = 0
+	for i := 0; i < len(D); i++ {
+		if i != start {
+			D[i] = INF
+		}
+	}
 	done := make([]bool, len(D))
-	heap.Push(pq, Element{0, 0})
+	heap.Push(pq, Element{start, 0})
 	for pq.Len() > 0 {
 		cur := heap.Pop(pq).(Element).id
 		if done[cur] {
